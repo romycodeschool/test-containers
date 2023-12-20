@@ -36,7 +36,7 @@ jobs:
 
       - name: Update and commit app version in docker-compose.yml
         run: |
-          echo -e "Current ./elasticbeanstalk/docker-compose.yml\n$(cat elasticbeanstalk/docker-compose.yml)"
+          echo -e "Current ./elasticbeanstalk/docker-compose.yaml\n$(cat elasticbeanstalk/docker-compose.yml)"
           sed -i -E 's_(bogdandanielioan/school-service:)([^"]*)_\1'${{ env.BUILD_NUMBER }}'_' elasticbeanstalk/docker-compose.yaml
           echo -e "Updated elasticbeanstalk/docker-compose.yaml\n$(cat elasticbeanstalk/docker-compose.yaml)"
           git config user.name github-actions
