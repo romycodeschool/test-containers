@@ -3,7 +3,6 @@ name: CD - Deploy Express API
 on:
   push:
     branches: [ master ]
-
   workflow_dispatch:
 
 permissions:
@@ -18,6 +17,9 @@ jobs:
         id: build-number
         run: echo "BUILD_NUMBER=$(date '+%d.%m.%Y.%H.%M.%S')" >> $GITHUB_ENV
 
+      - name: Checkout code
+        uses: actions/checkout@v2
+
       - name: Login to Docker Hub
         uses: docker/login-action@v1
         with:
@@ -31,11 +33,12 @@ jobs:
           REPO=test-containers \
           TAG=${{ env.BUILD_NUMBER }} \
           .ci/build-publish.sh .
+
       - name: Update and commit app version in docker-compose.yml
         run: |
           echo -e "Current ./elasticbeanstalk/docker-compose.yml\n$(cat elasticbeanstalk/docker-compose.yml)"
           sed -i -E 's_(bogdandanielioan/school-service:)([^"]*)_\1'${{ env.BUILD_NUMBER }}'_' elasticbeanstalk/docker-compose.yml
-          echo -e "Current elasticbeanstalk/docker-compose.yaml\n$(cat elasticbeanstalk/docker-compose.yml)"
+          echo -e "Updated elasticbeanstalk/docker-compose.yaml\n$(cat elasticbeanstalk/docker-compose.yml)"
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
