@@ -36,7 +36,7 @@ jobs:
 
       - name: Update and commit app version in docker-compose.yml
         run: |
-          echo -e "Current ./elasticbeanstalk/docker-compose.yaml\n$(cat elasticbeanstalk/docker-compose.yml)"
+          echo -e "Current ./elasticbeanstalk/docker-compose.yaml\n$(cat elasticbeanstalk/docker-compose.yaml)"
           sed -i -E 's_(bogdandanielioan/school-service:)([^"]*)_\1'${{ env.BUILD_NUMBER }}'_' elasticbeanstalk/docker-compose.yaml
           echo -e "Updated elasticbeanstalk/docker-compose.yaml\n$(cat elasticbeanstalk/docker-compose.yaml)"
           git config user.name github-actions
@@ -44,3 +44,16 @@ jobs:
           git add .
           git commit -m "new app version: ${{ env.BUILD_NUMBER }}"
           git push origin HEAD:master
+
+      - name: Deploy to EC2
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ssh
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          scp -o StrictHostKeyChecking=no ./elasticbeanstalk/docker-compose.yaml ec2-user@${{ env.EC2_INSTANCE_IP }}:/home/ec2-user/scripts/docker-compose.yaml
+          ssh -o StrictHostKeyChecking=no ec2-user@${{ env.EC2_INSTANCE_IP }} "cd /home/ec2-user/scripts/ && podman-compose up -d"
+        env:
+          EC2_SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+          EC2_INSTANCE_IP: 54.196.15.68
