@@ -26,11 +26,11 @@ jobs:
 
       - name: Docker Build and push
         run: |
-          chmod +x build-publish.sh
+          chmod +x /build-publish.sh
           USERNAME=bogdandanielioan \
           REPO=test-containers \
           TAG=${{ env.BUILD_NUMBER }} \
-          build-publish.sh .
+          /build-publish.sh .
       - name: Update and commit app version in docker-compose.yml
         run: |
           echo -e "Current ./elasticbeanstalk/docker-compose.yml\n$(cat elasticbeanstalk/docker-compose.yml)"
