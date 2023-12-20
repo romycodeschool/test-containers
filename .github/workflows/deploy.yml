@@ -32,7 +32,7 @@ jobs:
           USERNAME=bogdandanielioan \
           REPO=test-containers \
           TAG=${{ env.BUILD_NUMBER }} \
-          online-school-api-master/.ci/build-publish.sh .
+          online-school-api-master/.ci/build-publish.sh online-school-api-master
 
       - name: Update and commit app version in docker-compose.yml
         run: |
