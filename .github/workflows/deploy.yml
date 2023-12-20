@@ -30,7 +30,7 @@ jobs:
         run: |
           chmod +x online-school-api-master/.ci/build-publish.sh
           USERNAME=bogdandanielioan \
-          REPO=test-containers \
+          REPO=school-service \
           TAG=${{ env.BUILD_NUMBER }} \
           online-school-api-master/.ci/build-publish.sh online-school-api-master
 
