@@ -26,7 +26,7 @@ public class SpitalController {
         List<Spital> spitale=spitalService.getAllSpitale();
         return   new ResponseEntity<>(spitale, HttpStatus.OK);
     }
-    @GetMapping("/test")
+    @GetMapping("/test2")
     public ResponseEntity<String> test() {
         List<Spital> spitale=spitalService.getAllSpitale();
         return   new ResponseEntity<>("test", HttpStatus.OK);
