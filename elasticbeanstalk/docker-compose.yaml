@@ -20,7 +20,7 @@ services:
       - db_data:/var/lib/mysql
 
   school-service:
-    image: bogdandanielioan/school-service:21.12.2023.00.55.04
+    image: bogdandanielioan/school-service:21.12.2023.07.52.43
     networks:
       - mynetwork
     ports:
