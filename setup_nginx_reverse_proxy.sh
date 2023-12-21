@@ -1,34 +1,40 @@
 #!/bin/bash
 
-# Stop on any error
-set -e
+# Ensure the script is run as root
+if [ "$EUID" -ne 0 ]
+  then echo "Please run as root"
+  exit
+fi
 
-# Install Nginx
-echo "Installing Nginx..."
-sudo dnf install -y nginx
+# Step 1: Remove NGINX
+echo "Removing NGINX..."
+yum remove -y nginx
 
-# Create Nginx configuration for reverse proxy
-echo "Setting up Nginx configuration for reverse proxy..."
-cat <<EOF | sudo tee /etc/nginx/conf.d/reverse-proxy.conf
+# Step 2: Install NGINX
+echo "Installing NGINX..."
+yum install -y nginx
+
+# Step 3: Remove the default NGINX configuration
+echo "Removing default NGINX configuration..."
+rm -f /etc/nginx/conf.d/default.conf
+rm -f /etc/nginx/sites-enabled/default
+
+# Step 4: Create new NGINX configuration to redirect to localhost:8080
+echo "Configuring NGINX for redirect..."
+cat > /etc/nginx/conf.d/redirect.conf <<EOF
 server {
-    listen 80;
+    listen       80;
+    server_name  localhost;
 
     location / {
         proxy_pass http://localhost:8080;
-        proxy_set_header Host \$host;
-        proxy_set_header X-Real-IP \$remote_addr;
-        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto \$scheme;
+        
     }
 }
 EOF
 
-# Remove default Nginx configuration
-sudo rm -f /etc/nginx/sites-enabled/default
+# Step 5: Restart NGINX to apply the changes
+echo "Restarting NGINX..."
+systemctl restart nginx
 
-# Enable and restart Nginx to apply changes
-echo "Enabling and restarting Nginx..."
-sudo systemctl enable nginx
-sudo systemctl restart nginx
-
-echo "Nginx reverse proxy setup complete."
+echo "NGINX has been reinstalled and configured for redirect."
