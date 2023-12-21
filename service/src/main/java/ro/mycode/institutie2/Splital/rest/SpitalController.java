@@ -29,7 +29,7 @@ public class SpitalController {
     @GetMapping("/test2")
     public ResponseEntity<String> test() {
         List<Spital> spitale=spitalService.getAllSpitale();
-        return   new ResponseEntity<>("test3", HttpStatus.OK);
+        return   new ResponseEntity<>("test4", HttpStatus.OK);
     }
 
     @PostMapping("/createSpital")
