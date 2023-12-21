@@ -5,7 +5,8 @@ networks:
     driver: bridge
 
 volumes:
-  db_data:
+  db_data:  
+
 services:
   mysql:
     image: mysql:5.7
@@ -17,10 +18,10 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - db_data:/var/lib/mysql
+      - db_data:/var/lib/mysql  
 
-  school-service:
-    image: bogdandanielioan/school-service:20.12.2023.22.50.06
+  webapp:
+    image: bogdandanielioan/orders-service:v3
     networks:
       - mynetwork
     ports:

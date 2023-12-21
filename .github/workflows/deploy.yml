@@ -28,11 +28,11 @@ jobs:
 
       - name: Docker Build and push
         run: |
-          chmod +x online-school-api-master/.ci/build-publish.sh
+          chmod +x order-service-master/.ci/build-publish.sh
           USERNAME=bogdandanielioan \
           REPO=school-service \
           TAG=${{ env.BUILD_NUMBER }} \
-          online-school-api-master/.ci/build-publish.sh online-school-api-master
+          order-service-master/.ci/build-publish.sh order-service-master
 
       - name: Update and commit app version in docker-compose.yml
         run: |

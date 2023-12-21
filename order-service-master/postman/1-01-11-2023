@@ -1,0 +1,152 @@
+{
+	"info": {
+		"_postman_id": "fd829488-de0f-4060-8004-1b1249d34e0b",
+		"name": "Orders API",
+		"description": "Collection for Orders API testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30666351"
+	},
+	"item": [
+		{
+			"name": "Get All Orders",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7041/api/v1/orders/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7041",
+					"path": [
+						"api",
+						"v1",
+						"orders",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Order by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7041/api/v1/orders/order/{id}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7041",
+					"path": [
+						"api",
+						"v1",
+						"orders",
+						"order",
+						"{id}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Order",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"CustomerId\": \"32\",\"CreatedAt\": \"2023-11-01T12:00:00\",\"OrderDetails\": []}"
+				},
+				"url": {
+					"raw": "http://localhost:7041/api/v1/orders/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7041",
+					"path": [
+						"api",
+						"v1",
+						"orders",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Order",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"CustomerId\": \"22\",\"CreatedAt\": \"2023-11-02T14:00:00\",\"OrderDetails\": []}"
+				},
+				"url": {
+					"raw": "http://localhost:7041/api/v1/orders/update?id=15",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7041",
+					"path": [
+						"api",
+						"v1",
+						"orders",
+						"update"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "15"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Order",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7041/api/v1/orders/delete?id=16",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7041",
+					"path": [
+						"api",
+						"v1",
+						"orders",
+						"delete"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "16"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
