@@ -11,7 +11,7 @@ services:
     image: mysql:5.7
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: orders_db
+      MYSQL_DATABASE: database_db
     networks:
       - mynetwork
     ports:
@@ -20,15 +20,17 @@ services:
       - db_data:/var/lib/mysql
 
   school-service:
-    image: bogdandanielioan/school-service:21.12.2023.00.02.07
+    image: bogdandanielioan/school-service:latest
     networks:
       - mynetwork
     ports:
       - "8080:80"
     environment:
-      ASPNETCORE_ENVIRONMENT: Development
-      ConnectionStrings__DefaultConnection: "Server=mysql;Database=orders_db;User=root;Password=root;"
-      EUREKA__CLIENT__SHOULDFETCHREGISTRY: false
-      EUREKA__CLIENT__SHOULDREGISTERWITHEUREKA: false
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql:3306/database_db?allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf8&useSSL=false&createDatabaseIfNotExist=true"
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
+      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
     depends_on:
       - mysql
